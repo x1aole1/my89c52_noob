@@ -1,0 +1,15 @@
+,,,        ORG             0000H
+0000,01 30,,        AJMP    MAIN
+,,,        ORG             0030H
+0030,75 B0 20,MAIN,MAIN:MOV        P3,#20H
+0033,12 00 3F,,        LCALL   DELAY
+0036,75 B0 00,,        MOV             P3,#00H
+0039,12 00 3F,,        LCALL   DELAY
+003C,12 00 30,,        LCALL   MAIN
+,,,
+003F,78 0A,DELAY,DELAY:MOV       R0,#10
+0041,79 FA,,        MOV     R1,#250
+0043,D9 FE,,        DJNZ    R1,$
+0045,D8 F8,,        DJNZ    R0,DELAY
+0047,22,,        RET
+000E,,,        END

@@ -1,0 +1,25 @@
+C51 COMPILER V9.02   LESSON12_4                                                            01/05/2017 16:18:28 PAGE 1   
+
+
+C51 COMPILER V9.02, COMPILATION OF MODULE LESSON12_4
+OBJECT MODULE PLACED IN .\lesson12_4.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE F:\金沙滩\14-视频教程-第12章-指针基础与1602液晶的初步认识\第12章-指针基础与
+                    -1602液晶的初步认识\例程源代码\lesson12_4\lesson12_4.c BROWSE DEBUG OBJECTEXTEND PRINT(.\lesson12_4.lst) OBJECT(.\lesson1
+                    -2_4.obj)
+
+line level    source
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    178    ----
+   CONSTANT SIZE    =     24    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      16
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

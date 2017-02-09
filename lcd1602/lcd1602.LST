@@ -1,0 +1,95 @@
+C51 COMPILER V9.02   LCD1602                                                               12/03/2016 17:12:51 PAGE 1   
+
+
+C51 COMPILER V9.02, COMPILATION OF MODULE LCD1602
+OBJECT MODULE PLACED IN lcd1602.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE lcd1602.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          //#define uchar unsigned char;
+   3          sbit RS = P2^2; //位定义，液晶的数据/命令选择
+   4          sbit RW = P2^1; //位定义，液晶的读写选择
+   5          sbit EN = P2^0; //位定义，液晶使能信号
+   6          
+   7          //#define LCDPORT P2      //液晶的数据口
+   8          
+   9          unsigned char code table[]="I LOVE MCU!";         //在CODE区定义一个用于显示的常量字符串
+  10          unsigned char code table1[]="www.zstudy.com";     //在CODE区定义一个用于显示的常量字符串
+  11          void delay(unsigned int ms);    //延时函数
+  12          unsigned char num;
+  13          void write_com(unsigned char com)
+  14          {
+  15   1              RS=0;
+  16   1              P2=com;
+  17   1              delay(20);
+  18   1              EN=1;
+  19   1              delay(20);
+  20   1              EN=0;
+  21   1      }
+  22          void write_data(unsigned char date)
+  23          {
+  24   1              RS=1;
+  25   1              P2=date;
+  26   1              delay(20);
+  27   1              EN=1;
+  28   1              delay(20);
+  29   1              EN=0;
+  30   1      }
+  31          void init()
+  32          {
+  33   1              RW=0;
+  34   1              EN=0;
+  35   1              write_com(0x38);
+  36   1              write_com(0x0f);
+  37   1              write_com(0x06);
+  38   1              write_com(0x01);
+  39   1      }
+  40          /******************************************************************************
+  41          函数名称：main
+  42          函数功能：程序主函数
+  43          入口参数：无
+  44          返回值：无
+  45          备注：无
+  46          *******************************************************************************/
+  47          void main(void)
+  48          {
+  49   1              init();
+  50   1              write_com(0x80);
+  51   1              for(num=0;num<11;num++)
+  52   1              {
+  53   2                      write_data(table[num]);
+  54   2                      delay(20);
+  55   2              }
+C51 COMPILER V9.02   LCD1602                                                               12/03/2016 17:12:51 PAGE 2   
+
+  56   1                      write_com(0x80+0x40);
+  57   1              for(num=0;num<14;num++)
+  58   1              {
+  59   2                      write_data(table1[num]);
+  60   2                      delay(20);
+  61   2              }
+  62   1              while(1);
+  63   1      }
+  64          
+  65          
+  66          void delay(unsigned int ms)
+  67          {
+  68   1              unsigned char j = 110;
+  69   1              for(;ms > 0;ms--) while(--j);   
+  70   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    142    ----
+   CONSTANT SIZE    =     27    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

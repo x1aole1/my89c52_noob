@@ -1,0 +1,8 @@
+,,,        ORG     0000H
+0000,02 00 30,,        LJMP    MAIN
+,,,        ORG     0030H
+0030,85 AA B0,MAIN,MAIN:   MOV     P3,0AAH
+0033,80 FE,,        JMP     $
+000E,,,        END
+,,,
+,,,

@@ -1,0 +1,31 @@
+,,,ORG             0000H
+0000,01 30,,AJMP    MAIN
+,,,ORG             0030H
+0030,7B FE,MAIN,MAIN:MOV        R3,#0FEH
+0032,7C 7F,,         MOV    R4,#7FH
+0034,7D 08,,         MOV    R5,#8
+0036,7E 08,,         MOV    R6,#8
+0038,8B 90,LOOP,LOOP:MOV        P1,R3
+003A,EB,,         MOV    A,R3
+003B,23,,         RL             A
+003C,FB,,         MOV    R3,A
+003D,12 00 53,,         LCALL  DELAY
+0040,DE F6,,         DJNZ   R6,LOOP
+0042,7D 08,,         MOV    R5,#8
+0044,8C 90,LOOP1,LOOP1:MOV       P1,R4
+0046,EC,,         MOV    A,R4
+0047,03,,         RR             A
+0048,FC,,         MOV    R4,A
+0049,12 00 53,,         LCALL  DELAY
+004C,DD F6,,         DJNZ   R5,LOOP1
+004E,7E 08,,         MOV    R6,#8
+0050,12 00 38,,         LCALL  LOOP
+,,,
+0053,7A 05,DELAY,DELAY:MOV       R2,#5
+0055,78 C8,LP,LP:     MOV     R0,#200
+0057,79 FA,LP1,LP1:MOV         R1,#250
+0059,D9 FE,,        DJNZ    R1,$
+005B,D8 FA,,        DJNZ    R0,LP1
+005D,DA F6,,        DJNZ    R2,LP
+005F,22,,        RET
+000E,,,        END

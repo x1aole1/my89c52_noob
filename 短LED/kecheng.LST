@@ -1,0 +1,121 @@
+C51 COMPILER V9.02   KECHENG                                                               12/25/2016 23:16:32 PAGE 1   
+
+
+C51 COMPILER V9.02, COMPILATION OF MODULE KECHENG
+OBJECT MODULE PLACED IN kecheng.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE kecheng.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /**
+   2          
+   3            Name:  Intelligent fan
+   4            time:  2016/12/25
+   5          author:  Li_TGVp
+   6          
+   7          **/
+   8          #include <reg52.h>                               //引入单片机定义文件
+   9          #include <DSB18B20.c>                            //引入用于处理DSB182B20温度传感器模块的c语言程序
+  10          sbit  relay0 = P2^0;                             //定义继电器1的处理引脚为单片机的P2^0
+  11          sbit  relay1 = P2^1;                             //定义继电器2的处理引脚为单片机的P2^1
+  12          sbit  relay2 = P2^2;                             //定义继电器3的处理引脚为单片机的P2^2
+  13          sbit  LED1   = P1;                               //定义用于给1号数码管显示赋值的引脚为P1
+  14          sbit  LED2   = P0;                               //定义用于给2号数码管显示赋值的引脚为P0
+  15          sbit  PIR    = P2^3;                             //定义用于获取人体热势电传感器动作引脚为P2^3
+  16          //sbit  aircondition = P2^4;                     //定义用于获取人体热势电传感器动作引脚为P2^3
+  17          int printftemperature(int temperature);          //定义函数printftemperature()用来显示当前温度
+  18          int gettemperature();                            //定义函数gettemperature() 用来获取当前温度
+  19          int temper;                                      //定义整型变量(int)temper来作为温度的处理地点
+  20          int main()                                       // C语言主函数
+  21          {   
+  22   1          int temper = gettemperature();               // 调用函数gettemperature()获取当前温度并存入temper
+  23   1          if (PIR == 1)
+  24   1          {
+  25   2              if (  temper > 35 && temper < 40)            //如果温度符合35-40这个温度段，则启用高速
+  26   2              {
+  27   3                  relay0 = 0;
+  28   3              }
+  29   2              else if (  temper < 30 && temper > 35)       //如果温度符合30-35这个温度段，则启用中速
+  30   2              {
+  31   3                  relay1 = 0;
+  32   3              }
+  33   2              else if (  temper > 26 && temper < 30)       //如果温度符合26-30这个温度段，则启用低速
+  34   2              {
+  35   3                  relay2 = 0;
+  36   3              }
+  37   2              /*
+  38   2              else if (  temper >40 )
+  39   2              {
+  40   2              aircondition = 1;
+  41   2              }
+  42   2              */
+  43   2              else                                         //如果温度不符合上面三个温度段，则不动作
+  44   2              {
+  45   3                  relay0 = 1;
+  46   3                  relay1 = 1;
+  47   3                  relay2 = 1;
+  48   3      
+  49   3              }
+  50   2              
+  51   2          }
+  52   1          else
+  53   1          {
+  54   2              relay0 = 1;
+  55   2              relay1 = 1;
+C51 COMPILER V9.02   KECHENG                                                               12/25/2016 23:16:32 PAGE 2   
+
+  56   2              relay2 = 1;
+  57   2          }
+  58   1          printftemperature(temper);                  //调用函数  在7段数码管上显示温度
+  59   1          return 0;
+  60   1      
+  61   1      }
+  62          int printftemperature(int temperature)          //声明函数  printftemperature
+  63          
+  64          {
+  65   1       unsigned char code LedChar[]={                     // 设置数组存入用于显示0-9的数码管显示的16进制
+  66   1          0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8,
+  67   1          0x80, 0x90, 0x88, 0x83, 0xC6, 0xA1, 0x86, 0x8E
+  68   1          };
+  69   1      unsigned char LedBuff[2]={
+  70   1          0xFF, 0xFF
+  71   1          };
+  72   1          P1 = LedChar[temperature / 10];             // 定义P1显示温度的十位
+  73   1          P0 = LedChar[temperature %10];              // 定义P2显示温度的个位
+  74   1          return 0;
+  75   1      }
+  76          int gettemperature()                          // 使用温度传感器模块获取当前温度
+  77          {
+  78   1          bit res;
+  79   1          int temp;       
+  80   1          int intT;  
+  81   1          Start18B20();      
+  82   1          
+  83   1         
+  84   1                 
+  85   1          res = Get18B20Temp(&temp);  
+  86   1          if (res)                    
+  87   1          {
+  88   2              intT = temp >> 4; 
+  89   2          }            
+  90   1          else                        
+  91   1          {
+  92   2              return 88;
+  93   2          }
+  94   1          Start18B20();              
+  95   1          return intT;
+  96   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    408    ----
+   CONSTANT SIZE    =     18    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       4
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

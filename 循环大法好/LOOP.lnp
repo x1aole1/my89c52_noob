@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"LOOP.obj" 
+TO "LOOP" 
+RAMSIZE(256) 

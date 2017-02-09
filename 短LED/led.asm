@@ -1,0 +1,11 @@
+	ORG     0000H
+	LJMP    MAIN
+	ORG     0030H
+MAIN:MOV     A,#0AH
+	MOV 	P1,A
+	MOV		P3,A
+	MOV		P0,#00H
+	JMP	$
+	END
+
+	

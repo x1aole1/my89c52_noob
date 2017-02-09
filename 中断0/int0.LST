@@ -1,0 +1,66 @@
+A51 MACRO ASSEMBLER  INT0                                                                 12/01/2016 11:49:56 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02
+OBJECT MODULE PLACED IN int0.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE int0.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1             ORG             0000H
+0000 0132              2             AJMP    MAIN
+0003                   3             ORG             0003H
+0003 2100              4             AJMP    INTZD1
+0030                   5             ORG             0030H
+0030 7400              6             MOV             A,#00H
+0032                   7     MAIN:;MOV       A,#01H
+0032 F590              8             MOV             P1,A
+0034 120111            9             LCALL   DELAY
+0037 D288             10             SETB    IT0
+0039 D2A8             11             SETB    EX0
+003B D2AF             12             SETB    EA
+003D D2B8             13             SETB    PX0
+                      14             ;JMP            $
+003F 120032           15             LCALL   MAIN
+0100                  16             ORG             0100H
+0100 C0D0             17     INTZD1:PUSH     PSW
+0102 7590F0           18             MOV             P1,#0F0H
+0105 120111           19             LCALL   DELAY
+0108 75900F           20             MOV             P1,#0FH
+010B 120111           21             LCALL   DELAY
+010E D0D0             22             POP             PSW
+                      23             ;LCALL  INTZD1
+0110 32               24             RETI
+0111 7D19             25     DELAY:MOV  R5, #25
+0113 7E64             26     DLY1: MOV  R6, #100
+0115 7F64             27     DLY2: MOV  R7, #100
+0117 DFFE             28           DJNZ R7, $
+0119 DEFA             29           DJNZ R6, DLY2
+011B DDF6             30           DJNZ R5, DLY1
+011D 22               31           RET
+                      32           END
+A51 MACRO ASSEMBLER  INT0                                                                 12/01/2016 11:49:56 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DELAY. . . . . . .  C ADDR   0111H   A   
+DLY1 . . . . . . .  C ADDR   0113H   A   
+DLY2 . . . . . . .  C ADDR   0115H   A   
+EA . . . . . . . .  B ADDR   00A8H.7 A   
+EX0. . . . . . . .  B ADDR   00A8H.0 A   
+INTZD1 . . . . . .  C ADDR   0100H   A   
+IT0. . . . . . . .  B ADDR   0088H.0 A   
+MAIN . . . . . . .  C ADDR   0032H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+PSW. . . . . . . .  D ADDR   00D0H   A   
+PX0. . . . . . . .  B ADDR   00B8H.0 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
